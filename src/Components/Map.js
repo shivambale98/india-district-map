@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { ComposableMap, Geographies, Geography,  ZoomableGroup } from "react-simple-maps";
-import classes from './Maps.module.css';
+import './Maps.css';
 
 
 
 const geoUrl ="https://raw.githubusercontent.com/deldersveld/topojson/master/countries/india/india-districts.json";
 
 const Maps  = () => {
-    const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
+    const [position, setPosition] = useState({ coordinates: [80, 19], zoom: 5 });
 
     function handleZoomIn() {
       if (position.zoom >= 4) return;
@@ -44,10 +44,8 @@ const Maps  = () => {
       </Geographies>
       </ZoomableGroup>
     </ComposableMap>
-    <div className={classes.controls}>
-        <button
-        className={classes.buttons1} 
-        onClick={handleZoomIn}>
+    <div className="controls">
+        <button onClick={handleZoomIn}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -60,9 +58,7 @@ const Maps  = () => {
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </button>
-        <button 
-        className={classes.buttons2} 
-        onClick={handleZoomOut}>
+        <button onClick={handleZoomOut}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
