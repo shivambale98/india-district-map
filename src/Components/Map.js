@@ -16,6 +16,7 @@ const Maps = (props) => {
   const [position, setPosition] = useState({ coordinates: [80, 22], zoom: 9 });
   const [selectedState, setSelectedState] = useState();
   const [selectedDistrict, setSelectedDistrict] = useState();
+
   function handleZoomIn() {
     if (position.zoom >= 16) return;
     setPosition(pos => ({ ...pos, zoom: pos.zoom * 2 }));
