@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 import './Maps.css';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/india/india-districts.json";
 var temp1, temp2;
@@ -13,7 +13,7 @@ var states = [], districts = [];
 
 
 const Maps = (props) => {
-   const [position, setPosition] = useState({ coordinates: [80, 22], zoom: 9 });
+   const [position, setPosition] = useState({ coordinates: [80, 20], zoom: 8 });
     const [selectedState, setSelectedState] = useState();
     const [selectedDistrict, setSelectedDistrict] = useState();
   function handleZoomIn() {
@@ -51,14 +51,14 @@ const Maps = (props) => {
      
     // selection of districts //
   return (
-   <div className="main">
-       <Container>
+       <Container className="cont">
          <Row>
-           <Col sm={8}>
+           <Col lg={6}>
       <div className="map">
       {gethighest()}
       <ComposableMap
         width={1000}
+        height={850}
         fill="#D6D6DA"
         stroke="#FFFFFF"
         strokeWidth={0.1}
@@ -99,7 +99,7 @@ const Maps = (props) => {
       </ComposableMap>
         </div>
     </Col>        
- <Col sm={4}>
+ <Col lg={4}>
     <div className="controls">
       <div className="box">
         <button onClick={handleZoomIn}>
@@ -128,7 +128,6 @@ const Maps = (props) => {
           </svg>
         </button>
         </div>
-
         <div className="districtselector">
            <p className="title"> Select the state</p>
            <select className="select">
@@ -145,7 +144,7 @@ const Maps = (props) => {
             </option>
            </select>
        </div>
-          <div className="block">
+        <div className="block">
           <div className="statBlock">
             <p className="head">confirmed:</p>
             <span className="number">30</span>
@@ -155,10 +154,10 @@ const Maps = (props) => {
             <div className="number1">30</div>
           </div>
       </div>
+      </div>
       </Col>
       </Row>
       </Container>
-      </div>
         );
 };
 
