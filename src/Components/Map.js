@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col'
 
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/india/india-districts.json";
 var temp1, temp2;
-var states = [], districts = [];
+var states = [];
 var currentst;
 
 class Maps extends Component {
@@ -18,8 +18,10 @@ class Maps extends Component {
     this.state = {
       position: [80, 22],
       zoom: 9,
-      highest: 0
-
+      highest: 0,
+      currentst: 'Kerala',
+      distlist: [],
+      displaydata: { confirmed: 'null', lastupdate: 'null' }
     };
 
   }
@@ -52,7 +54,6 @@ class Maps extends Component {
       var districtData = this.props.data[t1].districtData;
 
       for (var t2 in districtData) {
-        districts.push(t2);
         if (districtData[t2].confirmed > this.state.highest) {
           highest = districtData[t2].confirmed;
         }
@@ -73,21 +74,24 @@ class Maps extends Component {
   }
   // selection of districts //
 
-  onstchange(event) {
-    if (event) {
-      currentst = event.target.value;
-      console.log(currentst);
-    }
-  }
-
-  dydistlist = () => {
+  handelchange = (event) => {
+    var districts = [];
+    currentst = event.target.value;
     var districtData = this.props.data[currentst].districtData;
+    console.log(districtData);
     for (var t1 in districtData) {
-      return <option
-        value={t1}>
-        {t1}
-      </option>
+      districts.push(t1);
+      this.setState({ distlist: districts });
     }
+  };
+
+  handelchangedist = (event) => {
+    var currentdt = event.target.value;
+    var disp = this.props.data[currentst].districtData[currentdt];
+    if (!disp.lastupdate) {
+      disp.lastupdate = 'null'
+    }
+    this.setState({ displaydata: disp });
   }
 
   // selection of districts //
@@ -95,8 +99,14 @@ class Maps extends Component {
 
 
     const stlist = states.map(st => {
-      return (<option value={st} onClick={this.onstchange.bind(this)}>
+      return (<option value={st}>
         {st}
+      </option>)
+    });
+
+    const dlist = this.state.distlist.map(d => {
+      return (<option value={d}>
+        {d}
       </option>)
     });
 
@@ -182,13 +192,18 @@ class Maps extends Component {
 
                 <div className="districtselector">
                   <p className="title"> Select the state</p>
-                  <select className="select">
+                  <select className="select" onClick={this.handelchange.bind(this)}>
                     {stlist}
                   </select>
 
                   <p className="title"> Select the District</p>
-                  <select className="select">
+                  <select className="select" onClick={this.handelchangedist.bind(this)}>
+                    {dlist}
                   </select>
+                  <div>
+                    <p>confirmed: {this.state.displaydata.confirmed}</p>
+                    <p>lastupdate: {this.state.displaydata.lastupdate}</p>
+                  </div>
                 </div>
               </div>
             </Col>
