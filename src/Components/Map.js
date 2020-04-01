@@ -17,8 +17,8 @@ class Maps extends Component {
   constructor() {
     super();
     this.state = {
-      position: [80, 22],
-      zoom: 9,
+      position: [80, 18],
+      zoom: 8,
       highest: 0,
       currentst: 'Kerala',
       distlist: [],
@@ -111,14 +111,15 @@ class Maps extends Component {
     });
 
     return (
-      <div className="main">
-        <Container>
+      <React.Fragment>
+        <Container className="cont">
           <Row>
-            <Col sm={8}>
+            <Col lg={8} >
               <div className="map">
                 {this.gethighest()}
                 <ComposableMap
-                  width={1000}
+                  width={1200}
+                  height={1100}
                   fill="#D6D6DA"
                   stroke="#FFFFFF"
                   strokeWidth={0.1}
@@ -160,7 +161,7 @@ class Maps extends Component {
                 </ComposableMap>
               </div>
             </Col>
-            <Col sm={4}>
+            <Col lg={2}>
               <div className="controls">
                 <div className="box">
                   <button onClick={this.handleZoomIn.bind(this)}>
@@ -214,7 +215,57 @@ class Maps extends Component {
             </Col>
           </Row>
         </Container>
+        <div className="mobile">
+                <div className="box">
+                  <button onClick={this.handleZoomIn.bind(this)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 27"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                    >
+                      <line x1="12" y1="4" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </button>
+                  <button onClick={this.handleZoomOut.bind(this)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 27"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </button>
+                </div>
+        <div className="districtselector">
+                  <p className="titlem"> Select the state</p>
+                  <select className="selectm" onClick={this.handelchange.bind(this)}>
+                    {stlist}
+                  </select>
+
+                  <p className="titlem"> Select the District</p>
+                  <select className="selectm" onClick={this.handelchangedist.bind(this)}>
+                    {dlist}
+                  </select>
+                 <div className="blockm">
+          <div className="statBlockm">
+            <p className="headm">confirmed: </p>
+            <span className="numberm">{this.state.displaydata.confirmed}</span>
+          </div>
+          <div className="statBlock1m">
+            <p className="head1m">last updated:</p>
+            <div className="number1m"> {this.state.displaydata.lastupdate}</div>
+          </div>
       </div>
+                </div>
+         </div>
+    </React.Fragment>     
     );
 
   }
