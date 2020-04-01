@@ -1,62 +1,105 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { ComposableMap, Geographies, Geography,  ZoomableGroup } from "react-simple-maps";
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 import './Maps.css';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import Col from 'react-bootstrap
+
+const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/india/india-districts.json";
+var temp1, temp2;
+var highest = 0;
+var states = [], districts = [];
 
 
-const geoUrl ="https://raw.githubusercontent.com/deldersveld/topojson/master/countries/india/india-districts.json";
-
-const Maps  = () => {
-    const [position, setPosition] = useState({ coordinates: [80, 22], zoom: 9 });
+const Maps = (props) => {
+   const [position, setPosition] = useState({ coordinates: [80, 22], zoom: 9 });
     const [selectedState, setSelectedState] = useState();
     const [selectedDistrict, setSelectedDistrict] = useState();
-    function handleZoomIn() {
-      if (position.zoom >= 16) return;
-      setPosition(pos => ({ ...pos, zoom: pos.zoom * 2 }));
+  function handleZoomIn() {
+    if (position.zoom >= 16) return;
+    setPosition(pos => ({ ...pos, zoom: pos.zoom * 2 }));
+  }
+  function handleZoomOut() {
+    if (position.zoom <= 1) return;
+    setPosition(pos => ({ ...pos, zoom: pos.zoom / 2 }));
+  }
+  function handleMoveEnd(position) {
+    setPosition(position);
+  }
+  const gethighest = () => {
+    for (var t1 in props.data) {
+      states.push(t1);
+      var districtData = props.data[t1].districtData;
+
+      for (var t2 in districtData) {
+        districts.push(t2);
+        if (districtData[t2].confirmed > highest) {
+          highest = districtData[t2].confirmed;
+        }
+      }
     }
-    
-    function handleZoomOut() {
-      if (position.zoom <= 1) return;
-      setPosition(pos => ({ ...pos, zoom: pos.zoom / 2 }));
-    }
-    
-    function handleMoveEnd(position) {
-      setPosition(position);
-    }
-    // selection of districts //
+    console.log(states);
+    console.log(districts);
+  }
+  const heatMapColorforValue = (value) => {
+    value = value / highest;
+    var h = (1.0 - value) * 240
+    return "hsl(" + h + ", 100%, 50%)";
+  }
+      // selection of districts //
      
     // selection of districts //
-
-    return (
-     <div className="main">
+  return (
+   <div className="main">
        <Container>
          <Row>
            <Col sm={8}>
       <div className="map">
-      <ComposableMap 
-          width={1200}
-          height={1000}
-          fill="#D6D6DA"
-          stroke="#FFFFFF"
-          strokeWidth={0.1}
-          >
-      <ZoomableGroup 
-       zoom={position.zoom}
-       center={position.coordinates}
-       onMoveEnd={handleMoveEnd}>
-      <Geographies geography={geoUrl}>
-        {({ geographies }) =>
-          geographies.map(geo => <Geography key={geo.rsmKey} geography={geo} />)
-        }
-      </Geographies>
-      </ZoomableGroup>
-    </ComposableMap>
-    </div>
-    </Col>
-    <Col sm={4}>
+      {gethighest()}
+      <ComposableMap
+        width={1000}
+        fill="#D6D6DA"
+        stroke="#FFFFFF"
+        strokeWidth={0.1}
+      >
+        <ZoomableGroup
+          zoom={position.zoom}
+          center={position.coordinates}
+          onMoveEnd={handleMoveEnd}>
+          <Geographies geography={geoUrl}>
+            {({ geographies }) =>
+              geographies.map(geo => {
+                var state = geo.properties.NAME_1;
+                var dist = geo.properties.NAME_2;
+
+                if (props.data) {
+                  temp1 = props.data[state];
+                }
+                if (temp1) {
+                  temp2 = temp1.districtData[dist];
+                }
+                if (temp1 && temp2) {
+                  // console.log(temp2);
+                  return < Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={heatMapColorforValue(temp2.confirmed)}
+                  />
+                } else {
+                  return < Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                  />
+                }
+              })
+            }
+          </Geographies>
+        </ZoomableGroup>
+      </ComposableMap>
+        </div>
+    </Col>        
+ <Col sm={4}>
     <div className="controls">
       <div className="box">
         <button onClick={handleZoomIn}>
@@ -109,7 +152,7 @@ const Maps  = () => {
       </div>
         );
 };
-   
 
 
-export default  Maps;
+
+export default Maps;
