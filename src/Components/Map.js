@@ -2,28 +2,14 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 import './Maps.css';
-import { scaleQuantize } from "d3-scale";
 
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/india/india-districts.json";
 var temp1, temp2;
 var highest = 0;
-
-
-const colorScale = scaleQuantize()
-  .domain([1, 10])
-  .range([
-    "#ffedea",
-    "#ffcec5",
-    "#ffad9f",
-    "#ff8a75",
-    "#ff5533",
-    "#e2492d",
-    "#be3d26",
-    "#9a311f",
-    "#782618"
-  ]);
+var states = [], districts = [];
 
 const Maps = (props) => {
+
   const [position, setPosition] = useState({ coordinates: [80, 19], zoom: 5 });
 
   function handleZoomIn() {
@@ -42,15 +28,18 @@ const Maps = (props) => {
 
   const gethighest = () => {
     for (var t1 in props.data) {
+      states.push(t1);
       var districtData = props.data[t1].districtData;
 
       for (var t2 in districtData) {
+        districts.push(t2);
         if (districtData[t2].confirmed > highest) {
           highest = districtData[t2].confirmed;
         }
       }
     }
-    console.log(highest);
+    console.log(states);
+    console.log(districts);
   }
 
   const heatMapColorforValue = (value) => {
@@ -95,7 +84,6 @@ const Maps = (props) => {
                   return < Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    fill={colorScale("#EEE")}
                   />
                 }
               })
