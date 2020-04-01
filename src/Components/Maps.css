@@ -11,24 +11,27 @@ svg {
   display: inline-block;
   vertical-align: middle;
 }
-.main{
-  width: auto;
-  height: auto;
+.cont{
+  width: 100%;
+  height: 100%;
+  margin-left: 5%;
 }
 .map{
   width: auto;
   height: 100%;
-  margin-top: 5%;
+  width: 75%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 .controls {
 box-sizing: border-box;
 border: 0.5px solid black;
-height: 100%;
-width: 20%;
+height: 90%;
+width: 25%;
   position: fixed;
   top: 0;
-  left: 80%;
+  left: 85%;
   margin: 1.25rem 0;
   transform: translateX(-50%);
 }
@@ -97,7 +100,7 @@ font-size: 14px;
     justify-content: start;
     border-radius: 10px;
     background: #e0f2f1;
-  
+   margin-left: 10px;
   }
   .statBlock1{
     display: flex;
@@ -110,7 +113,7 @@ font-size: 14px;
     justify-content: initial;
     border-radius: 10px;
     background: #e0f2f1;
-  
+    margin-left: 10px;
   }
   
   
@@ -124,7 +127,7 @@ font-size: 14px;
     font-size: 14px;
   }
   .number{
-    margin-top: 5px;
+    margin-top: 8px;
     color:#ef5350 ;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-style: normal;
