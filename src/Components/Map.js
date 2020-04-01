@@ -65,6 +65,8 @@ const Maps = (props) => {
             {({ geographies }) =>
               geographies.map(geo => {
                 var state = geo.properties.NAME_1;
+                var dist = geo.properties.VARNAME_2;
+
                 var dist = geo.properties.NAME_2;
 
                 if (props.data) {
