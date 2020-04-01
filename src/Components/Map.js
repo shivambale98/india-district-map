@@ -145,6 +145,15 @@ const Maps = (props) => {
             </option>
            </select>
        </div>
+          <div className="block">
+          <div className="statBlock">
+            <p className="head">confirmed:</p>
+            <span className="number">30</span>
+          </div>
+          <div className="statBlock1">
+            <p className="head1">last updated:</p>
+            <div className="number1">30</div>
+          </div>
       </div>
       </Col>
       </Row>
