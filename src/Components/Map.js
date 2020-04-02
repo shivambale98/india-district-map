@@ -21,7 +21,8 @@ class Maps extends Component {
       highest: 0,
       currentst: 'Kerala',
       distlist: [],
-      displaydata: { confirmed: 'null', lastupdate: 'null' }
+      displaydata: { confirmed: 'null', lastupdate: 'null' },
+      data: undefined
     };
 
   }
@@ -30,6 +31,21 @@ class Maps extends Component {
   // });
   // const [selectedState, setSelectedState] = useState();
   // const [selectedDistrict, setSelectedDistrict] = useState();
+
+  componentDidMount() {
+    //fetch('https://raw.githubusercontent.com/sab99r/Indian-States-And-Districts/master/states-and-districts.json')
+    fetch('https://raw.githubusercontent.com/geohacker/india/master/district/india_district.geojson')
+      .then(res => {
+        return res.json();
+      })
+      .then(resdata => {
+        this.setState({
+          data: resdata
+        });
+        console.log(resdata);
+      });
+
+  }
 
   handleZoomIn() {
     if (this.state.zoom >= 16) return;
