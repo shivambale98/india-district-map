@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 import './Maps.css';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/india/india-districts.json";
 var temp1, temp2;
@@ -24,7 +25,6 @@ class Maps extends Component {
       displaydata: { confirmed: 'null', lastupdate: 'null' },
       data: undefined
     };
-
   }
 
   //   const[position, setPosition] = useState({ coordinates: [80, 22], zoom: 9
@@ -205,7 +205,6 @@ class Maps extends Component {
                     </svg>
                   </button>
                 </div>
-
                 <div className="districtselector">
                   <p className="title"> Select the state</p>
                   <select className="select" onClick={this.handelchange.bind(this)}>
@@ -216,10 +215,16 @@ class Maps extends Component {
                   <select className="select" onClick={this.handelchangedist.bind(this)}>
                     {dlist}
                   </select>
-                  <div>
-                    <p>confirmed: {this.state.displaydata.confirmed}</p>
-                    <p>lastupdate: {this.state.displaydata.lastupdate}</p>
-                  </div>
+                 <div className="block">
+          <div className="statBlock">
+            <p className="head">confirmed: </p>
+            <span className="number">{this.state.displaydata.confirmed}</span>
+          </div>
+          <div className="statBlock1">
+            <p className="head1">last updated:</p>
+            <div className="number1"> {this.state.displaydata.lastupdate}</div>
+          </div>
+      </div>
                 </div>
               </div>
             </Col>
@@ -231,7 +236,5 @@ class Maps extends Component {
   }
 
 }
-
-
 
 export default Maps;
