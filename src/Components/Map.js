@@ -17,8 +17,8 @@ class Maps extends Component {
   constructor() {
     super();
     this.state = {
-      position: [80, 22],
-      zoom: 9,
+      position: [85, 16],
+      zoom: 7,
       highest: 0,
       currentst: 'Kerala',
       distlist: [],
@@ -48,7 +48,7 @@ class Maps extends Component {
   }
 
   handleZoomIn() {
-    if (this.state.zoom >= 16) return;
+    if (this.state.zoom >= 12) return;
     //setPosition(pos => ({ ...pos, zoom: pos.zoom * 2 }));
     this.setState({ zoom: this.state.zoom * 2 });
   }
@@ -127,14 +127,15 @@ class Maps extends Component {
     });
 
     return (
-      <div className="main">
-        <Container>
+      <React.Fragment>
+        <Container className="cont">
           <Row>
-            <Col sm={8}>
+            <Col >
               <div className="map">
                 {this.gethighest()}
                 <ComposableMap
                   width={1000}
+                  height={1000}
                   fill="#D6D6DA"
                   stroke="#FFFFFF"
                   strokeWidth={0.1}
@@ -176,7 +177,7 @@ class Maps extends Component {
                 </ComposableMap>
               </div>
             </Col>
-            <Col sm={4}>
+            
               <div className="controls">
                 <div className="box">
                   <button onClick={this.handleZoomIn.bind(this)}>
@@ -206,16 +207,18 @@ class Maps extends Component {
                   </button>
                 </div>
                 <div className="districtselector">
-                  <p className="title"> Select the state</p>
-                  <select className="select" onClick={this.handelchange.bind(this)}>
+                  <div className="net">
+                  <h7 className="tits"> Select the state</h7> <br/>
+                  <select className="sel1" onClick={this.handelchange.bind(this)}>
                     {stlist}
                   </select>
-
-                  <p className="title"> Select the District</p>
-                  <select className="select" onClick={this.handelchangedist.bind(this)}>
+                  </div>
+                  <div className="nets">
+                  <h7 className="tits"> Select the District</h7>
+                  <select className="sel2" onClick={this.handelchangedist.bind(this)}>
                     {dlist}
                   </select>
-                 <div className="block">
+                  </div>
           <div className="statBlock">
             <p className="head">confirmed: </p>
             <span className="number">{this.state.displaydata.confirmed}</span>
@@ -224,13 +227,61 @@ class Maps extends Component {
             <p className="head1">last updated:</p>
             <div className="number1"> {this.state.displaydata.lastupdate}</div>
           </div>
-      </div>
                 </div>
               </div>
-            </Col>
           </Row>
         </Container>
+        <div className="mobile">
+                <div className="box">
+                  <button onClick={this.handleZoomIn.bind(this)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 27"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                    >
+                      <line x1="12" y1="4" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </button>
+                  <button onClick={this.handleZoomOut.bind(this)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 27"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </button>
+                </div>
+        <div className="districtselectorm">
+                  <p className="titlem"> Select the state</p>
+                  <select className="selectm" onClick={this.handelchange.bind(this)}>
+                    {stlist}
+                  </select>
+
+                  <p className="titlem"> Select the District</p>
+                  <select className="selectm" onClick={this.handelchangedist.bind(this)}>
+                    {dlist}
+                  </select>
+                 <div className="blockm">
+          <div className="statBlockm">
+            <p className="headm">confirmed: </p>
+            <span className="numberm">{this.state.displaydata.confirmed}</span>
+          </div>
+          <div className="statBlock1m">
+            <p className="head1m">last updated:</p>
+            <div className="number1m"> {this.state.displaydata.lastupdate}</div>
+          </div>
       </div>
+                </div>
+         </div>
+    </React.Fragment>     
     );
 
   }
